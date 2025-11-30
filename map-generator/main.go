@@ -56,6 +56,9 @@ var maps = []MapItem{
 	{Name: "giantworldmap", IsTest: true},
 }
 
+// Global verbose flag set from CLI
+var verbose bool
+
 func outputMapDir(isTest bool) (string, error) {
 	cwd, err := os.Getwd()
 	if err != nil {
@@ -114,6 +117,7 @@ func processMap(name string, isTest bool) error {
 		ImageBuffer: imageBuffer,
 		RemoveSmall: !isTest, // Don't remove small islands for test maps
 		Name:        name,
+		Verbose:     verbose,
 	})
 	if err != nil {
 		return fmt.Errorf("failed to generate map for %s: %w", name, err)
@@ -197,7 +201,11 @@ func loadTerrainMaps() error {
 func main() {
 	// Add a CLI flag to optionally override the built-in `maps` list.
 	mapsFlag := flag.String("maps", "", "Comma-separated list of map names to process. Prefix a name with 'test:' to mark it as a test map.")
+	verboseFlag := flag.Bool("verbose", false, "Enable verbose logging for map generation (logs removed entities)")
 	flag.Parse()
+
+	// Set global verbose from CLI
+	verbose = *verboseFlag
 
 	if *mapsFlag != "" {
 		parts := strings.Split(*mapsFlag, ",")

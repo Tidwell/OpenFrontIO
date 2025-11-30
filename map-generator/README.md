@@ -55,3 +55,26 @@ Notes:
 
 - Map names must match the folder name under `map-generator/assets/maps` (or `map-generator/assets/test_maps` for test maps).
 - If `-maps` is not provided the built-in list in `main.go` is used.
+
+## Verbose logging
+
+The generator supports a `-verbose` CLI flag that enables additional logging about removed small islands and lakes. When enabled the generator will print a short summary for each removed entity showing its size and a representative starting pixel coordinate.
+
+Examples:
+
+- Run the generator with verbose logging for the default built-in maps:
+
+```
+go run . -verbose
+```
+
+- Run a single map with verbose logging:
+
+```
+go run . -maps="asia" -verbose
+```
+
+Notes:
+
+- Verbose output is purposely compact: it prints the size and a single starting pixel for each removed island or lake (to avoid extremely long coordinate lists).
+- Use `-verbose` when you need to debug or inspect which small features are being removed during generation.
