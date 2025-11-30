@@ -13,9 +13,10 @@ This is a tool to generate map files for OpenFront.
 1. Create a new folder in assets/maps/<map_name>
 2. Create image.png
 3. Create info.json with name and countries
-4. Add the map name in main.go
+4. Add the map name in `main.go`
 5. Run the generator: `go run .`
-6. Find the output folder at generated/maps/<map_name>
+6. Find the output folder at `../resources/maps/<map_name>` when running default (non-test) maps.
+   Test maps are written to `../tests/testdata/maps/<map_name>`.
 
 ## Create image.png
 
@@ -31,3 +32,26 @@ This is a tool to generate map files for OpenFront.
 
 - Islands smaller than 30 tiles (pixels) are automatically removed by the script.
 - Bodies of water smaller than 200 tiles (pixels) are also removed.
+
+## Using the `-maps` flag
+
+An optional CLI flag `-maps` can be used to override the builtin list of maps and process only a subset of maps. The value is a comma-separated list of map names. Prefix a name with `test:` to mark that map as a test map (it will be written to the test output directory and small-island removal is disabled for tests).
+
+Examples:
+
+- Process two default maps:
+
+```
+go run . -maps="asia,africa"
+```
+
+- Process one test map and one normal map:
+
+```
+go run . -maps="test:plains,world"
+```
+
+Notes:
+
+- Map names must match the folder name under `map-generator/assets/maps` (or `map-generator/assets/test_maps` for test maps).
+- If `-maps` is not provided the built-in list in `main.go` is used.

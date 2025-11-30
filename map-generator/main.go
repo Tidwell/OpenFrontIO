@@ -2,17 +2,21 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 	"sync"
 )
 
-var maps = []struct {
+type MapItem struct {
 	Name   string
 	IsTest bool
-}{
+}
+
+var maps = []MapItem{
 	{Name: "africa"},
 	{Name: "asia"},
 	{Name: "australia"},
@@ -69,12 +73,11 @@ func inputMapDir(isTest bool) (string, error) {
 		return "", fmt.Errorf("failed to get working directory: %w", err)
 	}
 	if isTest {
-		return filepath.Join(cwd, "assets", "test_maps"), nil 
+		return filepath.Join(cwd, "assets", "test_maps"), nil
 	} else {
-		return filepath.Join(cwd, "assets", "maps"), nil 
+		return filepath.Join(cwd, "assets", "maps"), nil
 	}
 }
-
 
 func processMap(name string, isTest bool) error {
 	outputMapBaseDir, err := outputMapDir(isTest)
@@ -117,18 +120,18 @@ func processMap(name string, isTest bool) error {
 	}
 
 	manifest["map"] = map[string]interface{}{
-		"width": result.Map.Width,
-		"height": result.Map.Height,
+		"width":          result.Map.Width,
+		"height":         result.Map.Height,
 		"num_land_tiles": result.Map.NumLandTiles,
-	}	
+	}
 	manifest["map4x"] = map[string]interface{}{
-		"width": result.Map4x.Width,
-		"height": result.Map4x.Height,
+		"width":          result.Map4x.Width,
+		"height":         result.Map4x.Height,
 		"num_land_tiles": result.Map4x.NumLandTiles,
 	}
 	manifest["map16x"] = map[string]interface{}{
-		"width": result.Map16x.Width,
-		"height": result.Map16x.Height,
+		"width":          result.Map16x.Width,
+		"height":         result.Map16x.Height,
 		"num_land_tiles": result.Map16x.NumLandTiles,
 	}
 
@@ -148,13 +151,13 @@ func processMap(name string, isTest bool) error {
 	if err := os.WriteFile(filepath.Join(mapDir, "thumbnail.webp"), result.Thumbnail, 0644); err != nil {
 		return fmt.Errorf("failed to write thumbnail for %s: %w", name, err)
 	}
-	
+
 	// Serialize the updated manifest to JSON
 	updatedManifest, err := json.MarshalIndent(manifest, "", "  ")
 	if err != nil {
 		return fmt.Errorf("failed to serialize manifest for %s: %w", name, err)
 	}
-	
+
 	if err := os.WriteFile(filepath.Join(mapDir, "manifest.json"), updatedManifest, 0644); err != nil {
 		return fmt.Errorf("failed to write manifest for %s: %w", name, err)
 	}
@@ -168,12 +171,13 @@ func loadTerrainMaps() error {
 	// Process maps concurrently
 	for _, mapItem := range maps {
 		wg.Add(1)
-		go func() {
+		// pass mapItem into closure to avoid loop variable capture
+		go func(mi MapItem) {
 			defer wg.Done()
-			if err := processMap(mapItem.Name, mapItem.IsTest); err != nil {
+			if err := processMap(mi.Name, mi.IsTest); err != nil {
 				errChan <- err
 			}
-		}()
+		}(mapItem)
 	}
 
 	// Wait for all goroutines to complete
@@ -191,9 +195,33 @@ func loadTerrainMaps() error {
 }
 
 func main() {
+	// Add a CLI flag to optionally override the built-in `maps` list.
+	mapsFlag := flag.String("maps", "", "Comma-separated list of map names to process. Prefix a name with 'test:' to mark it as a test map.")
+	flag.Parse()
+
+	if *mapsFlag != "" {
+		parts := strings.Split(*mapsFlag, ",")
+		newMaps := make([]MapItem, 0, len(parts))
+		for _, p := range parts {
+			p = strings.TrimSpace(p)
+			if p == "" {
+				continue
+			}
+			isTest := false
+			if strings.HasPrefix(p, "test:") {
+				isTest = true
+				p = strings.TrimPrefix(p, "test:")
+			}
+			newMaps = append(newMaps, MapItem{Name: p, IsTest: isTest})
+		}
+		if len(newMaps) > 0 {
+			maps = newMaps
+		}
+	}
+
 	if err := loadTerrainMaps(); err != nil {
 		log.Fatalf("Error generating terrain maps: %v", err)
 	}
-	
+
 	fmt.Println("Terrain maps generated successfully")
 }
