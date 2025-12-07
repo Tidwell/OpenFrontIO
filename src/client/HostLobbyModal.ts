@@ -10,6 +10,7 @@ import {
   GameMapType,
   GameMode,
   HumansVsNations,
+  LobbyPresetConfig,
   Quads,
   Trios,
   UnitType,
@@ -27,11 +28,7 @@ import "./components/baseComponents/Modal";
 import "./components/Difficulties";
 import "./components/LobbyTeamView";
 import "./components/Maps";
-import {
-  LobbyPreset,
-  LobbyPresetConfig,
-  LobbyPresetStore,
-} from "./LobbyPresets";
+import { LobbyPreset, LobbyPresetStore } from "./LobbyPresets";
 import { JoinLobbyEvent } from "./Main";
 import { terrainMapFileLoader } from "./TerrainMapFileLoader";
 import { renderUnitTypeOptions } from "./utilities/RenderUnitTypeOptions";
@@ -755,9 +752,11 @@ export class HostLobbyModal extends LitElement {
     if (!preset) {
       return;
     }
-
     const config = preset.config;
-    this.useRandomMap = config.useRandomMap;
+    this.usePreset(config);
+  }
+  private async usePreset(config: LobbyPresetConfig = {}) {
+    this.useRandomMap = config.useRandomMap ?? false;
     this.selectedMap = config.useRandomMap
       ? this.getRandomMap()
       : (config.gameMap ?? this.selectedMap);
