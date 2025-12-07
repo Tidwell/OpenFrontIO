@@ -1,5 +1,5 @@
 import { Config } from "../configuration/Config";
-import { AllPlayersStats, ClientID } from "../Schemas";
+import { AllPlayersStats, ClientID, TeamCountConfig } from "../Schemas";
 import { getClanTag } from "../Util";
 import { GameMap, TileRef } from "./GameMap";
 import {
@@ -148,6 +148,36 @@ export const mapCategories: Record<string, GameMapType[]> = {
     GameMapType.BaikalNukeWars,
     GameMapType.FourIslands,
   ],
+};
+
+export type LobbyPresetConfig = {
+  gameMap?: GameMapType;
+  useRandomMap?: boolean;
+  difficulty?: Difficulty;
+  disableNPCs?: boolean;
+  bots?: number;
+  infiniteGold?: boolean;
+  donateGold?: boolean;
+  infiniteTroops?: boolean;
+  donateTroops?: boolean;
+  instantBuild?: boolean;
+  randomSpawn?: boolean;
+  compactMap?: boolean;
+  maxTimer?: boolean;
+  maxTimerValue?: number;
+  gameMode?: GameMode;
+  playerTeams?: TeamCountConfig;
+  disabledUnits?: UnitType[];
+};
+
+const base: LobbyPresetConfig = {
+  gameMap: GameMapType.FourIslands,
+  disableNPCs: true,
+  infiniteTroops: true,
+  bots: 0,
+};
+export const scenarios: Record<string, LobbyPresetConfig[]> = {
+  tutorials: [base],
 };
 
 export enum GameType {

@@ -10,10 +10,12 @@ import {
   GameMode,
   GameType,
   HumansVsNations,
+  LobbyPresetConfig,
   Quads,
   Trios,
   UnitType,
   mapCategories,
+  scenarios,
 } from "../core/game/Game";
 import { UserSettings } from "../core/game/UserSettings";
 import { TeamCountConfig } from "../core/Schemas";
@@ -24,11 +26,7 @@ import "./components/Difficulties";
 import "./components/Maps";
 import { fetchCosmetics } from "./Cosmetics";
 import { FlagInput } from "./FlagInput";
-import {
-  LobbyPreset,
-  LobbyPresetConfig,
-  LobbyPresetStore,
-} from "./LobbyPresets";
+import { LobbyPreset, LobbyPresetStore } from "./LobbyPresets";
 import { JoinLobbyEvent } from "./Main";
 import { UsernameInput } from "./UsernameInput";
 import { renderUnitTypeOptions } from "./utilities/RenderUnitTypeOptions";
@@ -202,6 +200,46 @@ export class SinglePlayerModal extends LitElement {
                   ${translateText("map.random")}
                 </div>
               </div>
+            </div>
+          </div>
+
+          <!-- Scenario Selection -->
+          <div class="options-section">
+            <div class="option-title">${translateText("map.scenarios")}</div>
+            <div class="option-cards flex-col">
+              <!-- Use the imported scenarios -->
+              ${Object.entries(scenarios).map(
+                ([categoryKey, scenario]) => html`
+                  <div class="w-full mb-4">
+                    <h3
+                      class="text-lg font-semibold mb-2 text-center text-gray-300"
+                    >
+                      ${translateText(`map_categories.${categoryKey}`)}
+                    </h3>
+                    <div class="flex flex-row flex-wrap justify-center gap-4">
+                      ${scenario.map((scenarioValue) => {
+                        const mapKey = Object.keys(GameMapType).find(
+                          (key) =>
+                            GameMapType[key as keyof typeof GameMapType] ===
+                            scenarioValue.gameMap,
+                        );
+                        return html`
+                          <div
+                            @click=${() => this.startScenario(scenarioValue)}
+                          >
+                            <map-display
+                              .mapKey=${mapKey}
+                              .translation=${translateText(
+                                `map.${mapKey?.toLowerCase()}`,
+                              )}
+                            ></map-display>
+                          </div>
+                        `;
+                      })}
+                    </div>
+                  </div>
+                `,
+              )}
             </div>
           </div>
 
@@ -539,15 +577,22 @@ export class SinglePlayerModal extends LitElement {
     this.presetNameInput = "";
   }
 
+  private startScenario(scenario: LobbyPresetConfig) {
+    this.usePreset(scenario);
+    this.startGame();
+  }
   private applyPreset(name?: string) {
     const presetName = name ?? this.selectedPresetName;
     const preset = this.lobbyPresets.find((p) => p.name === presetName);
     if (!preset) {
       return;
     }
-
     const config = preset.config;
-    this.useRandomMap = config.useRandomMap;
+    this.usePreset(config);
+  }
+  private usePreset(config: LobbyPresetConfig = {}) {
+    console.log("using", config);
+    this.useRandomMap = config.useRandomMap ?? false;
     this.selectedMap = config.useRandomMap
       ? this.getRandomMap()
       : (config.gameMap ?? this.selectedMap);

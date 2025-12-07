@@ -1,26 +1,10 @@
-import { Difficulty, GameMapType, GameMode, UnitType } from "../core/game/Game";
+import {
+  Difficulty,
+  GameMapType,
+  GameMode,
+  LobbyPresetConfig,
+} from "../core/game/Game";
 import { UserSettings } from "../core/game/UserSettings";
-import { TeamCountConfig } from "../core/Schemas";
-
-export type LobbyPresetConfig = {
-  gameMap: GameMapType;
-  useRandomMap: boolean;
-  difficulty: Difficulty;
-  disableNPCs: boolean;
-  bots: number;
-  infiniteGold: boolean;
-  donateGold: boolean;
-  infiniteTroops: boolean;
-  donateTroops: boolean;
-  instantBuild: boolean;
-  randomSpawn: boolean;
-  compactMap: boolean;
-  maxTimer: boolean;
-  maxTimerValue?: number;
-  gameMode: GameMode;
-  playerTeams: TeamCountConfig;
-  disabledUnits: UnitType[];
-};
 
 export type LobbyPreset = {
   name: string;
