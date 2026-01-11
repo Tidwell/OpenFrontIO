@@ -2,119 +2,104 @@
   "name": "Britannia",
   "nations": [
     {
-      "coordinates": [960, 1258],
-      "name": "Dumnonia",
-      "flag": "1_Dumnonia"
+      "coordinates": [1969, 2305],
+      "flag": "fr",
+      "name": "Pas-de-Calais"
     },
     {
-      "coordinates": [918, 1088],
-      "name": "Dyfed",
-      "flag": "1_Dyfed"
+      "coordinates": [274, 1494],
+      "flag": "ie",
+      "name": "Mayo"
     },
     {
-      "coordinates": [1114, 1108],
-      "name": "Gwent",
-      "flag": "1_Gwent"
+      "coordinates": [242, 1931],
+      "flag": "ie",
+      "name": "Kerry"
     },
     {
-      "coordinates": [1048, 936],
-      "name": "Gwynedd",
-      "flag": "1_Gwynedd"
+      "coordinates": [328, 1754],
+      "flag": "ie",
+      "name": "Clare"
     },
     {
-      "coordinates": [1108, 986],
-      "name": "Powys",
-      "flag": "1_Powys"
+      "coordinates": [675, 1559],
+      "flag": "ie",
+      "name": "Meath"
     },
     {
-      "coordinates": [952, 536],
-      "name": "Strathclyde",
-      "flag": "1_Strathclyde"
+      "coordinates": [900, 518],
+      "flag": "gb-sct",
+      "name": "Highland"
     },
     {
-      "coordinates": [748, 556],
-      "name": "Dalriata",
-      "flag": "1_Dalriata"
+      "coordinates": [782, 830],
+      "flag": "gb-sct",
+      "name": "Argyll and Bute"
     },
     {
-      "coordinates": [1228, 1176],
-      "name": "Wessex",
-      "flag": "1_Wessex"
+      "coordinates": [1431, 1447],
+      "flag": "gb-eng",
+      "name": "North Yorkshire"
     },
     {
-      "coordinates": [1442, 1226],
-      "name": "Sussex",
-      "flag": "1_Sussex"
+      "coordinates": [1243, 622],
+      "flag": "gb-sct",
+      "name": "Aberdeenshire"
     },
     {
-      "coordinates": [1600, 1188],
-      "name": "Kent",
-      "flag": "1_Kent"
+      "coordinates": [1218, 1309],
+      "flag": "gb-eng",
+      "name": "Cumbria"
     },
     {
-      "coordinates": [1621, 1085],
-      "name": "Essex",
-      "flag": "1_Essex"
+      "coordinates": [1082, 1202],
+      "flag": "gb-sct",
+      "name": "Dumfries and Galloway"
     },
     {
-      "coordinates": [1707, 1018],
-      "name": "East Anglia",
-      "flag": "1_East Anglia"
+      "coordinates": [1096, 808],
+      "flag": "gb-sct",
+      "name": "Perthshire and Kinross"
     },
     {
-      "coordinates": [1370, 1002],
-      "name": "Mercia",
-      "flag": "1_Mercia"
+      "coordinates": [1626, 1688],
+      "flag": "gb-eng",
+      "name": "Lincolnshire"
     },
     {
-      "coordinates": [1298, 724],
-      "name": "Northumbria",
-      "flag": "1_Northumbria"
+      "coordinates": [1110, 2266],
+      "flag": "gb-eng",
+      "name": "Devon"
     },
     {
-      "coordinates": [962, 366],
-      "name": "Fortriu",
-      "flag": "1_Fortriu"
+      "coordinates": [1345, 1138],
+      "flag": "gb-eng",
+      "name": "Northumberland"
     },
     {
-      "coordinates": [272, 1041],
-      "name": "Munster",
-      "flag": "1_Munster"
+      "coordinates": [1792, 1799],
+      "flag": "gb-eng",
+      "name": "Norfolk"
     },
     {
-      "coordinates": [264, 830],
-      "name": "Connacht",
-      "flag": "1_Connacht"
+      "coordinates": [1154, 1888],
+      "flag": "gb-wls",
+      "name": "Powys"
     },
     {
-      "coordinates": [608, 975],
-      "name": "Laigin",
-      "flag": "1_Laigin"
+      "coordinates": [1801, 1905],
+      "flag": "gb-eng",
+      "name": "Suffolk"
     },
     {
-      "coordinates": [564, 845],
-      "name": "Southern Uí Néill",
-      "flag": "1_Southern Ui Neill"
+      "coordinates": [1469, 2190],
+      "flag": "gb-eng",
+      "name": "Hampshire"
     },
     {
-      "coordinates": [639, 680],
-      "name": "Ulaid",
-      "flag": "1_Ulaid"
-    },
-    {
-      "coordinates": [509, 759],
-      "name": "Airgialla",
-      "flag": "1_Airgialla"
-    },
-    {
-      "coordinates": [416, 678],
-      "name": "Northern Uí Néill",
-      "flag": "1_Northern Ui Neill"
-    },
-    {
-      "coordinates": [1869, 1308],
-      "name": "Franks",
-      "flag": "1_Franks"
+      "coordinates": [516, 1379],
+      "flag": "gb",
+      "name": "Fermanagh"
     }
   ]
 }
